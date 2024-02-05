@@ -11,7 +11,7 @@ const User = require('../Models/user');
 function DisplayHome(req, res, next)
 {
   /* Now Render the ejs page */
-  res.render('index', {title: 'Home', page: 'home'});
+  res.render('index', {title: 'VeggiMedia', page: 'home'});
 }
 function DisplayAbout(req, res, next)
 {
