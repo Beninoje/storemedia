@@ -1,18 +1,27 @@
-// required node modules
+//! required node modules
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+//! Additional Dependencies 
+const mongoose = require('mongoose');
 
 const hbs = require('hbs');
 
-// Routing modules
-const indexRouter = require('../Routes');
+//! Routing modules
+const indexRouter = require('../Routes/index');
+const mediaRouter = require('../Routes/media');
 
 const app = express();
 
-// view engine setup
+// db connection - must be after express app instantiated
+mongoose.connect('mongodb+srv://bnoje:bnoje@bnoje.e4rph7t.mongodb.net/comp2068g',{})
+.then((res)=>{console.log('Connected to MongoDB')})
+.catch((err)=>{console.log(`Error connecting: ${err}`)})
+
+
+//! view engine setup
 app.set('views', path.join(__dirname, '../Views'));
 app.set('view engine', 'hbs');
 
@@ -25,7 +34,7 @@ hbs.registerHelper('loadPage', function (pageName) {
   return pageName;
 });
 
-// middleware configuration
+//! middleware configuration
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,6 +42,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../../Client')));
 app.use(express.static(path.join(__dirname, '../../node_modules')));
 
+
+
+app.use('/media', mediaRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
