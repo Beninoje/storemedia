@@ -34,9 +34,20 @@ let deleteMedia = async(req,res,next)=>{
     // remove the selected doc
     await Media.findByIdAndDelete(req.params._id);
 
+    //! await Media.deleteOne({_id: req.params._id});
+
     //redirect
     res.redirect('/media');
 
+};
+let displayEditForm = async(req,res,next)=>{
+
+    let media = await Media.findById(req.params._id);
+
+    res.render('media/edit', { 
+        title: 'Update Media',
+        media: media
+    });
 };
 // make public
 module.exports = {
@@ -44,5 +55,6 @@ module.exports = {
     displayCreateForm,
     createMedia,
     deleteMedia,
+    displayEditForm,
 };
 

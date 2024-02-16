@@ -22,4 +22,9 @@ router.post('/create',(req,res,next) => {
 router.get('/delete/:_id',(req,res,next) => {
     mediaController.deleteMedia(req, res, next);
 });
+
+//! GET: /media/create => process form submission for creating
+router.get('/edit/:_id',(req,res,next) => {
+    mediaController.displayEditForm(req, res, next);
+});
 module.exports = router;

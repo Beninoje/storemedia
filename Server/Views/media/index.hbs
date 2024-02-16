@@ -10,9 +10,8 @@
             <p>{{this.status}}</p>
             <p>{{this.rating}}</p>
             <p>{{this.username}}</p>
-            <a href="/media/delete/{{this._id}}" class="btn btn-primary" onclick="return confirm('For real?!');">
-                Delete
-            </a>
+            <a href="/media/delete/{{this._id}}" class="btn btn-primary" onclick="return confirm('For real?!');">Delete</a>
+            <a href="media/edit/{{this._id}}" class="btn btn-primary mt-2">Edit</a>
         </li>
     {{/each}}
 </ul>
