@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 //! Additional Dependencies 
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
 const hbs = require('hbs');
 
@@ -15,8 +16,15 @@ const mediaRouter = require('../Routes/media');
 
 const app = express();
 
+// link to .env file if not in production mode
+if(process.env.NODE_ENV !== 'production')
+{
+  require('dotenv').config();
+}
+
+
 // db connection - must be after express app instantiated
-mongoose.connect('mongodb+srv://bnoje:bnoje@bnoje.e4rph7t.mongodb.net/comp2068g',{})
+mongoose.connect(process.env.MONGO_DB,{})
 .then((res)=>{console.log('Connected to MongoDB')})
 .catch((err)=>{console.log(`Error connecting: ${err}`)})
 
