@@ -8,4 +8,8 @@ router.get('/',(req,res,next) => {
     mediaController.index(req, res, next);
 });
 
+//! GET: default route
+router.get('/create',(req,res,next) => {
+    mediaController.index(req, res, next);
+});
 module.exports = router;
