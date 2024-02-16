@@ -8,8 +8,13 @@ router.get('/',(req,res,next) => {
     mediaController.index(req, res, next);
 });
 
-//! GET: default route
+//! GET: /media/create => display black form
 router.get('/create',(req,res,next) => {
-    mediaController.index(req, res, next);
+    mediaController.displayCreateForm(req, res, next);
+});
+
+//! POST: /media/create => process form submission for creating
+router.post('/create',(req,res,next) => {
+    mediaController.createMedia(req, res, next);
 });
 module.exports = router;
