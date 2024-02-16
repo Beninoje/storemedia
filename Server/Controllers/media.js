@@ -30,10 +30,19 @@ let createMedia = async(req,res,next)=>{
 
 };
 
+let deleteMedia = async(req,res,next)=>{
+    // remove the selected doc
+    await Media.findByIdAndDelete(req.params._id);
+
+    //redirect
+    res.redirect('/media');
+
+};
 // make public
 module.exports = {
     index,
     displayCreateForm,
     createMedia,
+    deleteMedia,
 };
 

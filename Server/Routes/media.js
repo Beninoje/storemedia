@@ -17,4 +17,9 @@ router.get('/create',(req,res,next) => {
 router.post('/create',(req,res,next) => {
     mediaController.createMedia(req, res, next);
 });
+
+//! GET: /media/create => process form submission for creating
+router.get('/delete/:_id',(req,res,next) => {
+    mediaController.deleteMedia(req, res, next);
+});
 module.exports = router;
