@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 //! Additional Dependencies 
 const mongoose = require('mongoose');
-// const dotenv = require('dotenv');
+//? const dotenv = require('dotenv');
 
 const hbs = require('hbs');
 
@@ -16,14 +16,14 @@ const mediaRouter = require('../Routes/media');
 
 const app = express();
 
-// link to .env file if not in production mode
+//! link to .env file if not in production mode
 if(process.env.NODE_ENV !== 'production')
 {
   require('dotenv').config();
 }
 
 
-// db connection - must be after express app instantiated
+//! db connection - must be after express app instantiated
 mongoose.connect(process.env.MONGO_DB,{})
 .then((res)=>{console.log('Connected to MongoDB')})
 .catch((err)=>{console.log(`Error connecting: ${err}`)})
@@ -50,25 +50,38 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../../Client')));
 app.use(express.static(path.join(__dirname, '../../node_modules')));
 
+//! HBS custom helpers functions
 
+hbs.registerHelper('selectOption', (currentValue, selectedValue) =>{
+  
+  let selectedProperty = '';
+
+  if(currentValue === selectedValue){
+
+    selectedProperty = 'selected';
+
+  }
+
+  return new hbs.SafeString(`<option${selectedProperty}>${currentValue}</option>`);
+});
 
 app.use('/media', mediaRouter);
 app.use('/', indexRouter);
 
-// catch 404 and forward to error handler
+//! catch 404 and forward to error handler
 app.use(function(req, res, next) 
 {
   next(createError(404));
 });
 
-// error handler
+//! error handler
 app.use(function(err, req, res, next) 
 {
-  // set locals, only providing error in development
+  //! set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  //! render the error page
   res.status(err.status || 500);
   res.render('error', {title: `Error: ${err.status}`, page: 'error'});
 });

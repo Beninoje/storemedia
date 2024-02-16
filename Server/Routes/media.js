@@ -23,8 +23,13 @@ router.get('/delete/:_id',(req,res,next) => {
     mediaController.deleteMedia(req, res, next);
 });
 
-//! GET: /media/create => process form submission for creating
+//! GET: /media/create => process form submission for edit
 router.get('/edit/:_id',(req,res,next) => {
     mediaController.displayEditForm(req, res, next);
+});
+
+//! POST: /media/edit/abc123 => process form submission for updating
+router.post('/edit/:_id',(req,res,next) => {
+    mediaController.updateMedia(req, res, next);
 });
 module.exports = router;
