@@ -28,6 +28,12 @@ router.get('/edit/:_id',(req,res,next) => {
     mediaController.displayEditForm(req, res, next);
 });
 
+//! GET: /media/create => process form submission for edit
+router.get('/details/:_id',(req,res,next) => {
+    mediaController.displayDetailsMedia(req, res, next);
+});
+
+
 //! POST: /media/edit/abc123 => process form submission for updating
 router.post('/edit/:_id',(req,res,next) => {
     mediaController.updateMedia(req, res, next);

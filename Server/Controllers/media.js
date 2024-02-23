@@ -43,9 +43,19 @@ let deleteMedia = async(req,res,next)=>{
 let displayEditForm = async(req,res,next)=>{
 
     let media = await Media.findById(req.params._id);
-console.log(media)
+    console.log(media)
     res.render('media/edit', { 
         title: 'Update Media',
+        media: media
+    });
+};
+
+let displayDetailsMedia = async(req,res,next)=>{
+
+    let media = await Media.findById(req.params._id);
+    console.log(media)
+    res.render('media/details', { 
+        title: 'Details Media',
         media: media
     });
 };
@@ -53,7 +63,7 @@ console.log(media)
 let updateMedia = async(req,res,next)=>{
 
     let media = await Media.findByIdAndUpdate(req.params._id, req.body);
-
+    
     //redirect
     res.redirect('/media');
 };
@@ -65,5 +75,7 @@ module.exports = {
     deleteMedia,
     displayEditForm,
     updateMedia,
+    displayDetailsMedia,
+
 };
 
