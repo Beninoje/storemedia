@@ -13,6 +13,7 @@ const hbs = require('hbs');
 //! Routing modules
 const indexRouter = require('../Routes/index');
 const mediaRouter = require('../Routes/media');
+const providerRouter = require('../Routes/provider');
 
 const app = express();
 
@@ -64,7 +65,7 @@ hbs.registerHelper('selectOption', (currentValue, selectedValue) =>{
 
   return new hbs.SafeString(`<option${selectedProperty}>${currentValue}</option>`);
 });
-
+app.use('/provider', providerRouter);
 app.use('/media', mediaRouter);
 app.use('/', indexRouter);
 

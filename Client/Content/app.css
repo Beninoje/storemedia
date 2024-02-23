@@ -1,1 +1,12 @@
 /*! CSS Here */
+body{
+    min-height:100vh;
+}
+footer{
+    position: sticky !important;
+    top:100%;
+    left:0;
+    text-align: center;
+    padding:20px 0px;
+    
+}
