@@ -9,6 +9,7 @@ let index = async(req,res,next)=>{
     res.render('media/index', {
         title: 'Media Library',
         media:media,
+        user:req.user
     });
 };
 
@@ -16,12 +17,11 @@ let displayCreateForm = async(req,res,next)=>{
     //fetch all media docs
     let media = await Media.find();
     let provider = await Provider.find();
-    console.log(media);
-    console.log(provider);
     res.render('media/create', {
         title: 'Media Library',
         media:media,
-        provider:provider
+        provider:provider,
+        user:req.user
     });
 };
 
@@ -54,6 +54,7 @@ let displayEditForm = async(req,res,next)=>{
         title: 'Update Media',
         provider:provider,
         media: media,
+        user:req.user
     });
 };
 

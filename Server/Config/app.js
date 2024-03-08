@@ -3,10 +3,11 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 //! Additional Dependencies 
+const logger = require('morgan')
 const mongoose = require('mongoose');
-//? const dotenv = require('dotenv');
+const passport = require('passport');
+const session = require('express-session');
 
 const hbs = require('hbs');
 
@@ -14,6 +15,7 @@ const hbs = require('hbs');
 const indexRouter = require('../Routes/index');
 const mediaRouter = require('../Routes/media');
 const providerRouter = require('../Routes/provider');
+const authRouter = require('../Routes/auth');
 
 const app = express();
 
@@ -51,6 +53,24 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../../Client')));
 app.use(express.static(path.join(__dirname, '../../node_modules')));
 
+// passport config BEFORE routers
+app.use(session({
+  secret: process.env.PASSPORT_SECRET,
+  resave: true,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// link passport to User model
+const User = require('../Models/user');
+passport.use(User.createStrategy());
+
+// link User model w/passport session mgmt
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //! HBS custom helpers functions
 
 hbs.registerHelper('selectOption', (currentValue, selectedValue) =>{
@@ -65,8 +85,12 @@ hbs.registerHelper('selectOption', (currentValue, selectedValue) =>{
 
   return new hbs.SafeString(`<option${selectedProperty}>${currentValue}</option>`);
 });
+
+
+
 app.use('/provider', providerRouter);
 app.use('/media', mediaRouter);
+app.use('/auth', authRouter);
 app.use('/', indexRouter);
 
 //! catch 404 and forward to error handler
