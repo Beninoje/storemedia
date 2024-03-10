@@ -12,14 +12,21 @@ const User = require('../Models/user');
 function DisplayHome(req, res, next)
 {
   /* Now Render the ejs page */
-  res.render('index', {title: 'VeggiMedia', page: 'home',user:req.user});
+  res.render('index', {
+      title: 'VeggiMedia',
+      page: 'home', 
+      user: req.user
+    });
 }
-function DisplayAbout(req, res, next)
+function DisplayAbout(req, res, next) 
 {
   let date = new Date();
-  /* Now Render the ejs page */
-  res.render('index', {title: 'About Us', page: 'about',date:date,user:req.user});
 
+  res.render('about', {
+    title: 'About',
+    date: date,
+    user: req.user
+  });
 }
 function DisplayContact(req, res, next)
 {

@@ -32,6 +32,7 @@ let displayLoginForm = (req, res, next) => {
     if (req.params.invalid) {
         messages = 'Invalid Login';
     }
+
     res.render('auth/login', { 
         title: 'Login', 
         messages: messages 

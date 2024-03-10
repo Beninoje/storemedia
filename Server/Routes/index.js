@@ -32,12 +32,4 @@ router.get('/privacy', (req, res, next)=>
 {
     IndexController.DisplayPrivacy(req, res, next);
 });
-// router.get('/register', (req, res, next)=>
-// {
-//     IndexController.DisplayPrivacy(req, res, next);
-// });
-// router.get('/login', (req, res, next)=>
-// {
-//     IndexController.DisplayPrivacy(req, res, next);
-// });
 module.exports = router;

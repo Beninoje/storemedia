@@ -87,7 +87,6 @@ hbs.registerHelper('selectOption', (currentValue, selectedValue) =>{
 });
 
 
-
 app.use('/provider', providerRouter);
 app.use('/media', mediaRouter);
 app.use('/auth', authRouter);

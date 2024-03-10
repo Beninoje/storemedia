@@ -1,22 +1,38 @@
 <h1>Media Library</h1>
-<ul class="row card-group ">
-    {{#each media}}
-        <li class="card m-4 text-center col-lg-4">
-            <h5>
-                {{this.title}}
-            </h5>
-            <h6>
-                {{this.type}}
-            </h6>
-            <p>{{this.releaseYear}}</p>
-            <p>{{this.provider}}</p>
-            <p>{{this.status}}</p>
-            <p>{{this.rating}}</p>
-            <p>{{this.username}}</p>
-            <a href="/media/delete/{{this._id}}" class="btn btn-primary" onclick="return confirm('For real?!');">Delete</a>
-            <a href="media/edit/{{this._id}}" class="btn btn-primary mt-2">Edit</a>
-            <a href="media/details/{{this._id}}" class="btn btn-primary mt-2">Details</a>
-        </li>
-    {{/each}}
+<ul class="row card-group">
+    {{#if user}}
+        {{#each media}}
+            <li class="card m-4 text-center col-lg-4">
+                <h5>{{this.title}}</h5>
+                <h6>{{this.type}}</h6>
+                <p>{{this.releaseYear}}</p>
+                <p>{{this.provider}}</p>
+                <p>{{this.status}}</p>
+                <p>{{this.rating}}</p>
+                <p>{{this.username}}</p>
+                <a href="/media/edit/{{this._id}}" class="btn btn-primary">
+                    Edit
+                </a>
+                <a href="/media/delete/{{this._id}}" class="btn btn-primary"
+                    onclick="return confirm('For real??');">
+                    Delete
+                </a>
+            </li>
+        {{/each}}
+    {{else}}
+            {{#each media}}
+                <li class="card m-4 text-center col-lg-4">
+                    <h5>{{this.title}}</h5>
+                    <h6>{{this.type}}</h6>
+                    <p>{{this.releaseYear}}</p>
+                    <p>{{this.provider}}</p>
+                    <p>{{this.status}}</p>
+                    <p>{{this.rating}}</p>
+                    <p>{{this.username}}</p>
+                </li>
+            {{/each}}
+    {{/if}}
 </ul>
-<a href="/media/create">Create New Media</a>
+{{#if user}}
+    <a href="/media/create">Create New Media</a>
+{{/if}}

@@ -1,15 +1,18 @@
 //Media Model for CRUD
 let Media = require('../Models/media');
 let Provider = require('../Models/provider');
+const User = require('../Models/user');
 
-let index = async(req,res,next)=>{
-    //fetch all media docs
+let index = async (req, res, next) => {
+    // fetch all media docs 
     let media = await Media.find();
-    console.log(media);
-    res.render('media/index', {
+    let provider = await Provider.find();
+
+    res.render('media/index', { 
         title: 'Media Library',
-        media:media,
-        user:req.user
+        media: media,
+        provider: provider,
+        user: req.user
     });
 };
 
@@ -36,30 +39,37 @@ let createMedia = async(req,res,next)=>{
 
 let deleteMedia = async(req,res,next)=>{
     // remove the selected doc
-    await Media.findByIdAndDelete(req.params._id);
+    let media = Media.findById(req.params._id) 
 
+    if(media.username !== req.user.username){
+        return res.redirect('/unauth');
+    }
+    await Media.findByIdAndDelete(req.params._id);
     //! await Media.deleteOne({_id: req.params._id});
 
     //redirect
     res.redirect('/media');
 
 };
-let displayEditForm = async(req,res,next)=>{
+let displayEditForm = async (req, res, next) => {
 
     let media = await Media.findById(req.params._id);
+
+    if(media.username !== req.user.username){
+        return res.redirect('/unauth');
+    }
+
     let provider = await Provider.find();
-    console.log(media);
-    console.log("Provider: " + provider);
+
     res.render('media/edit', { 
         title: 'Update Media',
-        provider:provider,
         media: media,
-        user:req.user
+        provider:provider,
+        user: req.user
     });
-};
+}
 
 let displayDetailsMedia = async(req,res,next)=>{
-
     let media = await Media.findById(req.params._id);
     console.log(media)
     res.render('media/details', { 
@@ -69,8 +79,15 @@ let displayDetailsMedia = async(req,res,next)=>{
 };
 
 let updateMedia = async(req,res,next)=>{
+    
+    let media = await Media.findById(req.params._id);
 
-    let media = await Media.findByIdAndUpdate(req.params._id, req.body);
+    if(media.username !== req.user.username){
+        return res.redirect('/unauth');
+    }
+    
+    await Media.findByIdAndUpdate(req.params._id, req.body);
+    
     
     //redirect
     res.redirect('/media');
